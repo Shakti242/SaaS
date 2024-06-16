@@ -1,11 +1,9 @@
+
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import './globals.css'
 import ThemeProvider  from '@/providers/theme-provider'
 import { ClerkProvider } from '@clerk/nextjs'
-// import ModalProvider from '@/providers/modal-provider'
-// import { Toaster } from '@/components/ui/sonner'
-// import { BillingProvider } from '@/providers/billing-provider'
 
 const font = DM_Sans({ subsets: ['latin'] })
 
@@ -21,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
-      publishableKey={"pk_test_aW52aXRpbmctbGFjZXdpbmctOC5jbGVyay5hY2NvdW50cy5kZXYk"}
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
     >
       <html lang="en">
         <body className={font.className}>
@@ -29,10 +27,12 @@ export default function RootLayout({
             attribute="class"
             defaultTheme="dark"
             enableSystem
-            disableTransitionOnChange children={undefined}          >
+            disableTransitionOnChange
+          >
+            {children}
             {/* <BillingProvider>
               <ModalProvider>
-                {children}
+                
                 <Toaster />
               </ModalProvider>
             </BillingProvider> */}
