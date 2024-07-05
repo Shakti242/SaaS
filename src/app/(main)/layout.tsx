@@ -1,19 +1,22 @@
-import { Props } from "next/script";
+import Props  from "next/script";
 import React from "react";
-import Sidebar from '@/components/sidebar'
+import Sidebar from '@/components/sidebar';
 import InfoBar from "@/components/infobar";
-type props = { children: React.ReactNode }
+
+type Props = { children: React.ReactNode };
+
 const Layout = (props: Props) => {
-    return(
+    return (
         <div className="flex overflow-hidden h-screen">
             <Sidebar />
-            <div className="e-full">
-                <InfoBar/>
-
-                {props.children}
+            <div className="flex flex-col flex-grow">
+                <InfoBar />
+                <div className="flex-grow">
+                    {props.children}
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Layout
+export default Layout;
