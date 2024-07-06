@@ -3,7 +3,6 @@ import React from 'react'
 import { db } from '@/lib/db'
 import { currentUser } from '@clerk/nextjs'
 import ProfilePicture from './components/profile-picture'
-import UploadCareButton from './components/uploadcare-button'
 
 type Props = {}
 
@@ -12,37 +11,51 @@ const Settings = async (props: Props) => {
   if (!authUser) return null
 
   const user = await db.user.findUnique({ where: { clerkId: authUser.id } })
-
   const removeProfileImage = async () => {
     'use server'
     const response = await db.user.update({
-      where: { clerkId: authUser.id },
-      data: { profileImage: '' },
+      where: {
+        clerkId: authUser.id,
+      },
+      data: {
+        profileImage: '',
+      },
     })
     return response
   }
 
   const uploadProfileImage = async (image: string) => {
     'use server'
+    const id = authUser.id
     const response = await db.user.update({
-      where: { clerkId: authUser.id },
-      data: { profileImage: image },
+      where: {
+        clerkId: id,
+      },
+      data: {
+        profileImage: image,
+      },
     })
+
     return response
   }
 
   const updateUserInfo = async (name: string) => {
     'use server'
+
     const updateUser = await db.user.update({
-      where: { clerkId: authUser.id },
-      data: { name },
+      where: {
+        clerkId: authUser.id,
+      },
+      data: {
+        name,
+      },
     })
     return updateUser
   }
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/50 p-6 text-4xl backdrop-blur-lg">
+      <h1 className="sticky top-0 z-[10] flex items-center justify-between border-b bg-background/50 p-6 text-4xl backdrop-blur-lg">
         <span>Settings</span>
       </h1>
       <div className="flex flex-col gap-10 p-6">
@@ -57,10 +70,10 @@ const Settings = async (props: Props) => {
           userImage={user?.profileImage || ''}
           onUpload={uploadProfileImage}
         />
-        <div className="flex justify-center items-center">
-          <UploadCareButton onUpload={uploadProfileImage} />
-        </div>
-        <ProfileForm user={user} onUpdate={updateUserInfo} />
+        <ProfileForm
+          user={user}
+          onUpdate={updateUserInfo}
+        />
       </div>
     </div>
   )
