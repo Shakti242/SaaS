@@ -10,7 +10,9 @@ import { CheckIcon } from 'lucide-react'
 import Image from 'next/image'
 
 export default function Home() {
+  console.log("Home")
   return (
+
     <main className="flex items-center justify-center flex-col bg-black text-white min-h-screen">
       <Navbar />
       <section className="h-screen w-full bg-neutral-950 rounded-md overflow-visible relative flex flex-col items-center antialiased">
