@@ -1,7 +1,7 @@
 import { WorkflowFormSchema } from '@/lib/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { BaseSyntheticEvent } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import {
@@ -45,14 +45,18 @@ const Workflowform = ({ subTitle, title }: Props) => {
   const isLoading = form.formState.isLoading
   const router = useRouter()
 
-  const handleSubmit = async (values: z.infer<typeof WorkflowFormSchema>) => {
-    // const workflow = await onCreateWorkflow(values.name, values.description)
-    // if (workflow) {
-    //   toast.message(workflow.message)
-    //   router.refresh()
-    // }
-    setClose()
-  }
+    function handleSubmit(data: { name: string; description: string }, event?: BaseSyntheticEvent<object, any, any> | undefined): unknown {
+        throw new Error('Function not implemented.')
+    }
+
+//   const handleSubmit = async (values: z.infer<typeof WorkflowFormSchema>) => {
+//     const workflow = await onCreateWorkflow(values.name, values.description)
+//     if (workflow) {
+//       toast.message(workflow.message)
+//       router.refresh()
+//     }
+//     setClose()
+//   }
 
   return (
     <Card className="w-full max-w-[650px] border-none">
