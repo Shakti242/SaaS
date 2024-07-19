@@ -24,13 +24,11 @@ import {
 } from '@/components/ui/resizable'
 import { toast } from 'sonner'
 import { usePathname } from 'next/navigation'
-// import { v4 } from 'uuid'
+import { v4 } from 'uuid'
 import { EditorCanvasDefaultCardTypes } from '@/lib/constant'
 import FlowInstance from './flow-instance'
-import EditorCanvasSidebar from './editor-canvas-sidebar'
-// import FlowInstance from './flow-instance.tsx'
 // import EditorCanvasSidebar from './editor-canvas-sidebar'
-import { onGetNodesEdges } from '../../../_actions/'
+import { onGetNodesEdges } from '../../../_actions/workflow-connections'
 
 type Props = {}
 
@@ -265,13 +263,13 @@ const EditorCanvas = (props: Props) => {
             </svg>
           </div>
         ) : (
-          <FlowInstance
-            edges={edges}
-            nodes={nodes}
-          >
-            <EditorCanvasSidebar nodes={nodes} />
-          </FlowInstance>
-        )}
+        //   <FlowInstance
+        //     edges={edges}
+        //     nodes={nodes}
+        //   >
+        //     <EditorCanvasSidebar nodes={nodes} />
+        //   </FlowInstance>
+        <></>)}
       </ResizablePanel>
     </ResizablePanelGroup>
   )

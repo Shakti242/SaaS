@@ -1,19 +1,33 @@
-import React from 'react';
-import Workflow from './workflow';
+import React from 'react'
+import Workflow from './workflow'
+import { onGetWorkflows } from '../_actions/workflow-connections'
+import MoreCredits from './more_creadits'
+import * as actions from '../_actions/workflow-connections'
+console.log(actions)  // Check if onGetWorkflows is present in the imported object
 
-type Props = {};
-const Workflows = (props: Props) => {
+type Props = {}
+
+const Workflows = async (props: Props) => {
+  const workflows = await onGetWorkflows()
   return (
     <div className="relative flex flex-col gap-4">
-      <section className="flex flex-col gap-4 p-2">
-        <Workflow
-          description="Creating a test Workflow"
-          id="e23498fj23948n"
-          name="Automation Workflow"
-          publish={false}
-        />
+      <section className="flex flex-col m-2">
+        <MoreCredits />
+        {workflows?.length ? (
+          workflows.map((flow) => (
+            <Workflow
+              key={flow.id}
+              {...flow}
+            />
+          ))
+        ) : (
+          <div className="mt-28 flex text-muted-foreground items-center justify-center">
+            No Workflows
+          </div>
+        )}
       </section>
     </div>
-  );
-};
-export default Workflows;
+  )
+}
+
+export default Workflows

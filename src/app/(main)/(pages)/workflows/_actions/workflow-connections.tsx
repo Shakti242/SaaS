@@ -1,6 +1,6 @@
 'use server'
-import { Option } from '../../../../../components/ui/multiple-selector'
-import { db } from '../../../../../lib/db'
+import { Option } from '@/components/ui/multiple-selector'
+import { db } from '@/lib/db'
 import { auth, currentUser } from '@clerk/nextjs'
 
 export const getGoogleListener = async () => {
@@ -135,7 +135,7 @@ export const onCreateNodeTemplate = async (
   }
 }
 
-export const onGetWorkflows = async () => {
+export async function onGetWorkflows() {
   const user = await currentUser()
   if (user) {
     const workflow = await db.workflows.findMany({
@@ -147,6 +147,8 @@ export const onGetWorkflows = async () => {
     if (workflow) return workflow
   }
 }
+
+
 
 export const onCreateWorkflow = async (name: string, description: string) => {
   const user = await currentUser()
