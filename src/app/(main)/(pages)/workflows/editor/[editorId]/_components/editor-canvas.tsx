@@ -167,10 +167,25 @@ const EditorCanvas = (props: Props) => {
     setIsWorkFlowLoading(true)
     const response = await onGetNodesEdges(pathname.split('/').pop()!)
     if (response) {
-      setEdges(JSON.parse(response.edges!))
-      setNodes(JSON.parse(response.nodes!))
-      setIsWorkFlowLoading(false)
+      try {
+        // Check if edges and nodes are strings before parsing
+        const edges = typeof response.edges === 'string' ? JSON.parse(response.edges) : response.edges;
+        const nodes = typeof response.nodes === 'string' ? JSON.parse(response.nodes) : response.nodes;
+
+        setEdges(edges);
+        setNodes(nodes);
+      } catch (error) {
+        console.error('Error parsing edges or nodes:', error);
+        // Optionally, handle the error state here
+      } finally {
+        setIsWorkFlowLoading(false);
+      }
+    } else {
+      // Handle the case where response is null or undefined
+      setIsWorkFlowLoading(false);
+      console.warn('No response received for edges and nodes.');
     }
+
     setIsWorkFlowLoading(false)
   }
 
@@ -263,13 +278,13 @@ const EditorCanvas = (props: Props) => {
             </svg>
           </div>
         ) : (
-        //   <FlowInstance
-        //     edges={edges}
-        //     nodes={nodes}
-        //   >
-        //     <EditorCanvasSidebar nodes={nodes} />
-        //   </FlowInstance>
-        <></>)}
+          //   <FlowInstance
+          //     edges={edges}
+          //     nodes={nodes}
+          //   >
+          //     <EditorCanvasSidebar nodes={nodes} />
+          //   </FlowInstance>
+          <></>)}
       </ResizablePanel>
     </ResizablePanelGroup>
   )
