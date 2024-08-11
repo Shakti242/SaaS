@@ -18,7 +18,7 @@ import { Button } from '../ui/button'
 import { Loader2 } from 'lucide-react'
 
 type Props = {
-  user?: any
+  user: any
   onUpdate?: any
 }
 
@@ -28,8 +28,8 @@ const ProfileForm = ({ user, onUpdate }: Props) => {
     mode: 'onChange',
     resolver: zodResolver(EditUserProfileSchema),
     defaultValues: {
-      name: user?.name,
-      email: user?.email,
+      name: user.name,
+      email: user.email,
     },
   })
 
@@ -42,7 +42,7 @@ const ProfileForm = ({ user, onUpdate }: Props) => {
   }
 
   useEffect(() => {
-    form.reset({ name: user?.name, email: user?.email })
+    form.reset({ name: user.name, email: user.email })
   }, [user])
 
   return (
@@ -69,7 +69,6 @@ const ProfileForm = ({ user, onUpdate }: Props) => {
           )}
         />
         <FormField
-          disabled={isLoading}
           control={form.control}
           name="email"
           render={({ field }) => (
@@ -78,6 +77,7 @@ const ProfileForm = ({ user, onUpdate }: Props) => {
               <FormControl>
                 <Input
                   {...field}
+                  disabled={true}
                   placeholder="Email"
                   type="email"
                 />
@@ -86,7 +86,6 @@ const ProfileForm = ({ user, onUpdate }: Props) => {
             </FormItem>
           )}
         />
-       
         <Button
           type="submit"
           className="self-start hover:bg-[#2F006B] hover:text-white "
