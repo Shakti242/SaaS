@@ -8,7 +8,7 @@ import Workflows from '@/components/icon/workflows'
 import { Connection } from './types'
 // import { Connection } from './types'
 
- 
+
 export const clients = [...new Array(10)].map((client, index) => ({
   href: `/${index + 1}.png`,
 }))
@@ -156,6 +156,7 @@ export const CONNECTIONS: Connection[] = [
     image: '/googleDrive.png',
     connectionKey: 'googleNode',
     alwaysTrue: true,
+    id: undefined
   },
   {
     title: 'Discord',
@@ -163,6 +164,7 @@ export const CONNECTIONS: Connection[] = [
     image: '/discord.png',
     connectionKey: 'discordNode',
     accessTokenKey: 'webhookURL',
+    id: undefined
   },
   {
     title: 'Notion',
@@ -170,14 +172,15 @@ export const CONNECTIONS: Connection[] = [
     image: '/notion.png',
     connectionKey: 'notionNode',
     accessTokenKey: 'accessToken',
+    id: undefined
   },
   {
     title: 'Slack',
-    description:
-      'Use slack to send notifications to team members through your own custom bot.',
+    description: 'Use slack to send notifications to team members through your own custom bot.',
     image: '/slack.png',
     connectionKey: 'slackNode',
     accessTokenKey: 'slackAccessToken',
     slackSpecial: true,
+    id: undefined
   },
 ]

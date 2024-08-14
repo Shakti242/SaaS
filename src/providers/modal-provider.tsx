@@ -17,8 +17,8 @@ type ModalContextType = {
 export const ModalContext = createContext<ModalContextType>({
   data: {},
   isOpen: false,
-  setOpen: (modal: React.ReactNode, fetchData?: () => Promise<any>) => {},
-  setClose: () => {},
+  setOpen: (modal: React.ReactNode, fetchData?: () => Promise<any>) => { },
+  setClose: () => { },
 })
 
 const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
