@@ -16,6 +16,28 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
+CREATE TABLE "Workflows" (
+    "id" TEXT NOT NULL,
+    "nodes" TEXT,
+    "edges" TEXT,
+    "name" TEXT NOT NULL,
+    "discordTemplate" TEXT,
+    "notionTemplate" TEXT,
+    "slackTemplate" TEXT,
+    "slackChannels" TEXT[],
+    "slackAccessToken" TEXT,
+    "notionAccessToken" TEXT,
+    "notionDbId" TEXT,
+    "flowPath" TEXT,
+    "cronPath" TEXT,
+    "publish" BOOLEAN DEFAULT false,
+    "description" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "Workflows_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "LocalGoogleCredential" (
     "id" TEXT NOT NULL,
     "accessToken" TEXT NOT NULL,
@@ -84,28 +106,6 @@ CREATE TABLE "Connections" (
     CONSTRAINT "Connections_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "Workflows" (
-    "id" TEXT NOT NULL,
-    "nodes" TEXT,
-    "edges" TEXT,
-    "name" TEXT NOT NULL,
-    "discordTemplate" TEXT,
-    "notionTemplate" TEXT,
-    "slackTemplate" TEXT,
-    "slackChannels" TEXT[],
-    "slackAccessToken" TEXT,
-    "notionAccessToken" TEXT,
-    "notionDbId" TEXT,
-    "flowPath" TEXT,
-    "cronPath" TEXT,
-    "publish" BOOLEAN DEFAULT false,
-    "description" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-
-    CONSTRAINT "Workflows_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User_clerkId_key" ON "User"("clerkId");
 
@@ -155,6 +155,9 @@ CREATE UNIQUE INDEX "Notion_databaseId_key" ON "Notion"("databaseId");
 CREATE UNIQUE INDEX "Connections_type_key" ON "Connections"("type");
 
 -- AddForeignKey
+ALTER TABLE "Workflows" ADD CONSTRAINT "Workflows_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("clerkId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "LocalGoogleCredential" ADD CONSTRAINT "LocalGoogleCredential_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -177,6 +180,3 @@ ALTER TABLE "Connections" ADD CONSTRAINT "Connections_userId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "Connections" ADD CONSTRAINT "Connections_slackId_fkey" FOREIGN KEY ("slackId") REFERENCES "Slack"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Workflows" ADD CONSTRAINT "Workflows_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("clerkId") ON DELETE RESTRICT ON UPDATE CASCADE;

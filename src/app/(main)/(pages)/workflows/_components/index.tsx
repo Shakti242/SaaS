@@ -1,13 +1,10 @@
-// components/Workflows.tsx
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import Workflow from './workflow';
 import { onGetWorkflows } from '../_actions/workflow-connections';
 import MoreCredits from './more_creadits';
 
-type Props = {}
-
-const Workflows: React.FC<Props> = () => {
+const Workflows: React.FC = () => {
   const [workflows, setWorkflows] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -17,7 +14,6 @@ const Workflows: React.FC<Props> = () => {
         const fetchedWorkflows = await onGetWorkflows();
         console.log("Fetched Workflows before setting state:", fetchedWorkflows);
         setWorkflows(fetchedWorkflows ?? []);
-        console.log("State after setting workflows:", workflows);
       } catch (error) {
         console.error("Error fetching workflows", error);
         setWorkflows([]);
@@ -27,7 +23,11 @@ const Workflows: React.FC<Props> = () => {
     };
 
     fetchWorkflows();
-  }, []); // Added an empty dependency array to run the effect only once
+  }, []); // Added an empty dependency array to run only once
+
+  useEffect(() => {
+    console.log("State after setting workflows:", workflows);
+  }, [workflows]); // Logs the workflows after they have been updated
 
   if (loading) {
     return (

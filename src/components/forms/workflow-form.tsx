@@ -44,15 +44,19 @@ const Workflowform = ({ subTitle, title }: Props) => {
 
   const isLoading = form.formState.isLoading
   const router = useRouter()
-
   const handleSubmit = async (values: z.infer<typeof WorkflowFormSchema>) => {
-    const workflow = await onCreateWorkflow(values.name, values.description)
-    if (workflow) {
-      toast.message(workflow.message)
-      router.refresh()
+    try {
+      const response = await onCreateWorkflow(values.name, values.description);
+      if (response && response.message) {
+        toast.message(response.message);
+      }
+    } catch (error) {
+      toast.message('An error occurred while creating the workflow.');
+    } finally {
+      setClose();
     }
-    setClose()
   }
+
 
   return (
     <Card className="w-full max-w-[650px] border-none">

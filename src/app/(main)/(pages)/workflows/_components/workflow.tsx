@@ -20,13 +20,18 @@ type Props = {
 }
 
 const Workflow = ({ description, id, name, publish }: Props) => {
-  const onPublishFlow = async (event: any) => {
+  const onPublishFlow = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Switch toggled');  // Add this log to see if the function is triggered
     const response = await onFlowPublish(
       id,
-      event.target.ariaChecked === 'false'
-    )
-    if (response) toast.message(response)
-  }
+      event.target.checked // Use event.target.checked instead of ariaChecked
+    );
+    console.log('Response:', response);  // Log the response
+
+    if (response) {
+      toast.message(response);
+    }
+  };
 
   return (
     <Card className="flex w-full items-center justify-between">
@@ -42,14 +47,14 @@ const Workflow = ({ description, id, name, publish }: Props) => {
             />
             <Image
               src="/notion.png"
-              alt="Google Drive"
+              alt="Notion"
               height={30}
               width={30}
               className="object-contain"
             />
             <Image
               src="/discord.png"
-              alt="Google Drive"
+              alt="Discord"
               height={30}
               width={30}
               className="object-contain"
@@ -66,12 +71,12 @@ const Workflow = ({ description, id, name, publish }: Props) => {
           htmlFor="airplane-mode"
           className="text-muted-foreground"
         >
-          {publish! ? 'On' : 'Off'}
+          {publish ? 'On' : 'Off'}
         </Label>
         <Switch
           id="airplane-mode"
-          // onClick={onPublishFlow}
-          defaultChecked={publish!}
+          checked={publish || false} // Ensure it's a boolean value
+          onChange={onPublishFlow} // Use onChange instead of onClick
         />
       </div>
     </Card>

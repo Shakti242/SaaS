@@ -6,6 +6,7 @@ import { useBilling } from '@/providers/billing-provider'
 import { useModal } from '@/providers/modal-provider'
 import { Plus } from 'lucide-react'
 import React from 'react'
+import { onCreateWorkflow } from '../_actions/workflow-connections'
 
 type Props = {}
 
@@ -14,6 +15,9 @@ const WorkflowButton = (props: Props) => {
   const { credits } = useBilling()
 
   const handleClick = () => {
+    console.log('Button clicked');  // Add this log
+    onCreateWorkflow('Workflow Name', 'Workflow Description');
+
     setOpen(
       <CustomModal
         title="Create a Workflow Automation"
